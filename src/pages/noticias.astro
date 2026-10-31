@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ArrowLink from '../components/ArrowLink.astro';
+import GridGuides from '../components/GridGuides.astro';
+import { newsItems } from '../data/news';
+---
+<BaseLayout title="Noticias EQANTH | Actualidad de nuestra comunidad" description="Noticias, anuncios y novedades de EQANTH y de la comunidad de la Facultad de Ciencias Económicas y Sociales de la Universidad de Los Andes.">
+  <PageHero label="Noticias EQANTH" intro="Un espacio para compartir lo que está pasando, reconocer los logros y mantener informada a nuestra comunidad con contenido claro y verificado." image="images/faces-pasillo.webp" imageAlt="Pasillo de la Facultad de Ciencias Económicas y Sociales" caption="La actualidad de FACES, contada desde su comunidad.">
+    <Fragment slot="title">Lo que sucede en FACES <span>se cuenta aquí.</span></Fragment>
+    <div class="hero-actions" slot="actions"><a class="button button-primary" href="#ultimas-noticias">Ver las noticias</a></div>
+  </PageHero>
+
+  <section class="section news-section" id="ultimas-noticias" aria-labelledby="news-index-title">
+    <div class="container">
+      <div class="section-heading split">
+        <div><p class="section-label">Actualidad del proyecto</p><h2 class="section-title" id="news-index-title">Las últimas noticias.</h2></div>
+        <p class="section-intro">Las publicaciones aparecen en orden de actualización. Cada anuncio enlaza con el apartado donde puedes conocer más.</p>
+      </div>
+      <div class="news-list">
+        {newsItems.map((item, index) => (
+          <article class="news-item" id={item.slug}>
+            <span class="news-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <div class="news-copy">
+              <p class="section-label">{item.category} · Actualización EQANTH</p>
+              <h2>{item.title}</h2>
+              <p class="news-excerpt">{item.excerpt}</p>
+              <div class="news-body">{item.body.map((paragraph) => <p>{paragraph}</p>)}</div>
+              {item.link && <ArrowLink to={item.link.path} label={item.link.label} />}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark news-cta">
+    <GridGuides />
+    <div class="container news-cta-inner">
+      <div><p class="section-label">La información también se construye en comunidad</p><h2 class="section-title">¿Hay algo importante que debamos contar?</h2></div>
+      <div><p>Comparte una noticia, un logro o una actividad para que el equipo pueda revisarla.</p><ArrowLink to="participa/?tipo=informacion#formulario" label="Proponer una noticia" /></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero h1 span { color: var(--accent-primary); }
+  .news-list { border-top: 1px solid var(--border-subtle); }
+  .news-item { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 16px; padding-block: clamp(40px, 6vw, 72px); border-bottom: 1px solid var(--border-subtle); scroll-margin-top: 100px; }
+  .news-number { padding-top: 5px; color: var(--accent-secondary); font-size: .72rem; font-weight: 800; }
+  .news-copy { max-width: 860px; }
+  .news-copy h2 { margin: 16px 0 20px; font-size: clamp(1.8rem, 4.2vw, 3.7rem); line-height: 1.06; letter-spacing: -.05em; text-wrap: balance; }
+  .news-excerpt { max-width: 62ch; margin: 0 0 24px; color: var(--text-primary); font-size: clamp(1rem, 2vw, 1.18rem); font-weight: 560; line-height: 1.7; }
+  .news-body { max-width: 68ch; margin-bottom: 24px; color: var(--text-secondary); }
+  .news-body p { margin: 0 0 14px; font-size: .9rem; line-height: 1.8; }
+  .news-cta-inner { position: relative; z-index: 1; display: grid; gap: 32px; }
+  .news-cta-inner > div:last-child { align-self: end; }
+  .news-cta-inner > div:last-child p { max-width: 44ch; margin: 0 0 20px; opacity: .78; }
+  @media (min-width: 900px) {
+    .news-item { grid-template-columns: 80px minmax(0, 1fr); gap: 32px; }
+    .news-copy { margin-left: 8.333%; }
+    .news-cta-inner { grid-template-columns: 1.2fr .8fr; gap: 72px; }
+  }
+</style>

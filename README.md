@@ -6,10 +6,13 @@ El contenido y la arquitectura proceden del `Documento Maestro Web EQANTH`. La p
 
 ## Páginas incluidas
 
-- Inicio.
+- Inicio, incluidas las tres noticias más recientes.
+- Noticias: anuncios y novedades del proyecto.
 - Somos EQANTH: historia, misión, visión, objetivos y manifiesto.
+- Equipo actual: presidencia y comisiones directivas por carrera.
 - Historias FACES.
 - Podcast.
+- Eventos: agenda, participaciones y archivo, con FACES FEST como primer evento.
 - Tu guía FACES.
 - Participa y contacto.
 - Privacidad.
@@ -113,6 +116,9 @@ El flujo volverá a compilar y publicar el sitio.
 src/
 ├── components/       Cabecera, buscador, pie de página e iconos
 ├── data/site.ts      Navegación, buscador y manifiesto
+├── data/news.ts      Noticias; la primera entrada es la más reciente
+├── data/team.ts      Presidenta y encargados de comisiones
+├── data/events.ts    Eventos y datos de su agenda
 ├── layouts/          Estructura HTML y metadatos compartidos
 ├── pages/            Contenido principal de cada página
 ├── styles/global.css Colores, tipografía y estilos compartidos
@@ -128,6 +134,27 @@ public/
 - Para añadir o corregir resultados del buscador, actualiza `searchEntries` en `src/data/site.ts`.
 - Para sustituir fotografías, conserva el nombre del archivo en `public/images/` o actualiza su referencia en la página correspondiente.
 - Para revisar enlaces de Instagram o YouTube, búscalos en `src/components/Footer.astro`, `src/components/Header.astro` y `src/pages/participa.astro`.
+
+## Añadir una noticia
+
+Edita `src/data/news.ts` y copia una entrada completa al principio del arreglo `newsItems`. La primera entrada se considera la más reciente. El Inicio toma automáticamente las tres primeras y el buscador también las incorpora.
+
+Cada noticia tiene `slug`, título, resumen, categoría, párrafos y, opcionalmente, un enlace. El `slug` debe ser único, usar minúsculas y no llevar espacios; forma el enlace interno de la noticia.
+
+## Completar el equipo actual
+
+Edita `src/data/team.ts`:
+
+1. Sustituye `name: null` por el nombre validado de cada encargado.
+2. Guarda las fotografías en `public/images/equipo/`, preferiblemente en formato WebP.
+3. Cambia `photo: null` por una ruta como `images/equipo/nombre-persona.webp`.
+4. Conserva `position` y actualiza `area` únicamente si cambia la denominación de la carrera o comisión.
+
+Las fichas muestran «Nombre por confirmar» y «Fotografía pendiente» mientras esos campos no estén completos.
+
+## Añadir un evento
+
+Edita `src/data/events.ts` y añade otra entrada al arreglo `events`. Completa el título, estado, resumen, fecha, lugar y participación. No publiques fechas ni lugares hasta que el equipo los confirme. La página de Eventos presenta automáticamente las nuevas entradas.
 
 ## Alcance técnico
 

@@ -4,6 +4,7 @@ import GridGuides from '../components/GridGuides.astro';
 import Icon from '../components/Icon.astro';
 import ArrowLink from '../components/ArrowLink.astro';
 import { asset } from '../utils/paths';
+import { newsItems } from '../data/news';
 
 const quickLinks = [
   { icon: 'book', title: 'Necesito información académica', text: 'Guías, procesos y orientación útil.', path: 'guia/' },
@@ -22,6 +23,7 @@ const features = [
   { number: 'II', label: 'Historias FACES', title: 'Una Facultad también son las personas que la habitan.', text: 'Estudiantes, profesores, trabajadores, autoridades y egresados comparten experiencias, aprendizajes y proyectos. Un archivo humano para reconocernos y recordar.', path: 'historias/', link: 'Conocer las historias', image: 'images/trabajo-administrativo.webp', alt: 'Miembro del personal administrativo de FACES ULA' },
   { number: 'III', label: 'Podcast', title: 'Hay conversaciones que también enseñan.', text: 'Entrevistas de profundidad, cápsulas y coberturas para escuchar a la comunidad, debatir con respeto y acercar los temas que importan en FACES.', path: 'podcast/', link: 'Entrar al podcast', image: 'images/faces-pasillo.webp', alt: 'Arquitectura interior de FACES ULA' }
 ];
+const latestNews = newsItems.slice(0, 3);
 ---
 <BaseLayout title="EQANTH | Historia, pertenencia e identidad" description="Historias, información y voces para entender, vivir y sentir la Facultad de Ciencias Económicas y Sociales de la Universidad de Los Andes.">
   <section class="home-hero">
@@ -58,6 +60,25 @@ const features = [
           <span><strong>{item.title}</strong><small>{item.text}</small></span>
           <Icon name="arrow" size={21} class="quick-arrow"/>
         </a>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section latest-news" aria-labelledby="latest-news-title">
+    <div class="container">
+      <div class="section-heading split">
+        <div><p class="section-label">Noticias EQANTH</p><h2 class="section-title" id="latest-news-title">Lo último de nuestra comunidad.</h2></div>
+        <div class="news-heading-action"><p class="section-intro">Anuncios, actividades y novedades para mantenerte al día.</p><ArrowLink to="noticias/" label="Ver todas las noticias" /></div>
+      </div>
+      <div class="latest-news-grid">
+        {latestNews.map((item, index) => (
+          <article class:list={["latest-news-item", { featured: index === 0 }]}>
+            <p class="section-label">{item.category} · Actualización EQANTH</p>
+            <h3>{item.title}</h3>
+            <p>{item.excerpt}</p>
+            <ArrowLink to={`noticias/#${item.slug}`} label="Leer la noticia" />
+          </article>
+        ))}
       </div>
     </div>
   </section>
@@ -166,6 +187,12 @@ const features = [
   .quick-arrow { color: var(--accent-primary); transition: transform 180ms ease-out; }
   .quick-link:hover { padding-inline: 8px; color: var(--accent-primary); }
   .quick-link:hover .quick-arrow { transform: translateX(5px); }
+  .news-heading-action .section-intro { margin-bottom: 12px; }
+  .latest-news-grid { display: grid; border-top: 1px solid var(--border-subtle); }
+  .latest-news-item { padding-block: 28px; border-bottom: 1px solid var(--border-subtle); }
+  .latest-news-item h3 { max-width: 20ch; margin: 16px 0; font-size: clamp(1.45rem, 3vw, 2.35rem); line-height: 1.08; letter-spacing: -.045em; }
+  .latest-news-item > p:not(.section-label) { max-width: 54ch; margin: 0 0 16px; color: var(--text-secondary); font-size: .84rem; line-height: 1.75; }
+  .latest-news-item.featured h3 { font-size: clamp(2rem, 4.5vw, 3.8rem); }
   .today-layout { position: relative; z-index: 1; display: grid; gap: 40px; }
   .today-intro > p:last-child { max-width: 44ch; margin: 24px 0 0; font-size: .88rem; opacity: .76; }
   .today-tabs { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--border-on-dark); }
@@ -208,6 +235,10 @@ const features = [
     .quick-grid { grid-template-columns: repeat(2, 1fr); }
     .quick-link { padding-inline: 20px; }
     .quick-link:nth-child(odd) { border-right: 1px solid var(--border-subtle); }
+    .latest-news-grid { grid-template-columns: 1.08fr .92fr; column-gap: clamp(40px, 6vw, 88px); }
+    .latest-news-item { padding-block: 32px; }
+    .latest-news-item.featured { grid-row: span 2; padding-right: clamp(32px, 5vw, 72px); border-right: 1px solid var(--border-subtle); border-bottom: 0; }
+    .latest-news-item.featured h3 { max-width: 14ch; }
     .today-layout { grid-template-columns: repeat(12, 1fr); column-gap: 24px; }
     .today-intro { grid-column: 1 / span 6; }
     .today-tabs { grid-column: 8 / -1; grid-row: 1; }
