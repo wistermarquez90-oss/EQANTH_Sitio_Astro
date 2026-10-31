@@ -1,0 +1,59 @@
+---
+import Icon from './Icon.astro';
+import { asset, href } from '../utils/paths';
+---
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="footer-brand">
+      <div class="footer-lockup">
+        <img src={asset('images/isotipo-eqanth.png')} alt="" width="34" height="52" loading="lazy" />
+        <span><strong>EQANTH</strong><small>¿En qué aula nos toca hoy?</small></span>
+      </div>
+      <p>Una plataforma para informar, conectar, escuchar y preservar las historias de la comunidad FACES ULA.</p>
+    </div>
+    <div class="footer-column">
+      <h2>Explora</h2>
+      <a href={href('somos/')}>Somos EQANTH</a>
+      <a href={href('historias/')}>Historias FACES</a>
+      <a href={href('podcast/')}>Podcast</a>
+      <a href={href('guia/')}>Tu guía FACES</a>
+    </div>
+    <div class="footer-column">
+      <h2>Comunidad</h2>
+      <a href={href('participa/')}>Participa</a>
+      <a href={href('participa/#contacto')}>Contacto</a>
+      <a href={href('privacidad/')}>Privacidad</a>
+      <a href="https://www.ula.edu.ve/" target="_blank" rel="noopener noreferrer">Universidad de Los Andes <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="footer-column footer-contact">
+      <h2>Sigamos la conversación</h2>
+      <a href="https://www.instagram.com/enqueaulanostocahoy/" target="_blank" rel="noopener noreferrer"><Icon name="instagram" size={20}/>@enqueaulanostocahoy</a>
+      <a href="https://www.youtube.com/@enqueaulanostocahoy" target="_blank" rel="noopener noreferrer"><Icon name="youtube" size={20}/>@enqueaulanostocahoy</a>
+      <a href="mailto:elpodcastdefaces@gmail.com"><Icon name="mail" size={20}/>elpodcastdefaces@gmail.com</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>Proyecto comunicacional avalado por el Consejo de Facultad de FACES ULA durante el período I-2026.</p>
+    <p>Hecho desde nuestra Facultad, para nuestra comunidad.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--surface-dark); color: var(--text-on-dark); padding: 64px max(16px, calc((100vw - var(--container)) / 2)) 24px; }
+  .footer-main { display: grid; gap: 40px; }
+  .footer-lockup { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .footer-lockup img { width: 28px; height: 48px; object-fit: contain; }
+  .footer-lockup span { display: grid; gap: 5px; }
+  .footer-lockup strong { font-size: 1.25rem; letter-spacing: .08em; line-height: 1; }
+  .footer-lockup small { color: var(--text-on-dark); font-size: .66rem; opacity: .72; }
+  .footer-brand p { max-width: 34ch; margin: 0; color: var(--text-on-dark); font-size: .84rem; line-height: 1.65; opacity: .78; }
+  .footer-column { display: flex; flex-direction: column; align-items: flex-start; gap: 13px; }
+  .footer-column h2 { margin: 0 0 8px; color: var(--text-on-dark); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
+  .footer-column a { display: inline-flex; align-items: center; gap: 8px; min-height: 28px; color: var(--text-on-dark); font-size: .8rem; text-decoration: none; opacity: .8; transition: opacity 180ms ease-out, transform 180ms ease-out; }
+  .footer-column a:hover { opacity: 1; transform: translateX(3px); }
+  .footer-contact a { overflow-wrap: anywhere; }
+  .footer-bottom { display: grid; gap: 12px; margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border-on-dark); }
+  .footer-bottom p { margin: 0; font-size: .68rem; line-height: 1.6; opacity: .64; }
+  @media (min-width: 700px) { .footer-main { grid-template-columns: 1.4fr 1fr 1fr; } .footer-contact { grid-column: 2 / -1; } .footer-bottom { grid-template-columns: 1.5fr 1fr; } .footer-bottom p:last-child { text-align: right; } }
+  @media (min-width: 1080px) { .site-footer { padding-top: 80px; } .footer-main { grid-template-columns: 1.5fr .8fr .8fr 1.4fr; } .footer-contact { grid-column: auto; } }
+</style>

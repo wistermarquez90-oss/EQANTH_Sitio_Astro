@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import ArrowLink from '../components/ArrowLink.astro';
+import GridGuides from '../components/GridGuides.astro';
+import { asset } from '../utils/paths';
+
+const voices = [
+  ['Estudiantes', 'Experiencias, proyectos y aprendizajes que nacen dentro y fuera del aula.'],
+  ['Profesores', 'Trayectorias, investigación y las conversaciones que dejan huella.'],
+  ['Personal', 'El trabajo cotidiano que sostiene la vida de nuestra Facultad.'],
+  ['Autoridades', 'Memoria institucional, decisiones y miradas sobre el presente de FACES.'],
+  ['Egresados', 'Lo que FACES dejó en ellos y lo que ellos siguen dejando en FACES.']
+];
+---
+<BaseLayout title="Historias FACES | Las voces de nuestra comunidad" description="Perfiles, entrevistas y relatos de estudiantes, profesores, personal, autoridades y egresados de FACES ULA.">
+  <PageHero label="Historias FACES" intro="FACES no es solamente un edificio o una estructura académica. Es una comunidad que se expresa a través de las personas que la habitan y la recuerdan." image="images/docente-aula.webp" imageAlt="Docente de FACES ULA explicando una clase" caption="Cada trayectoria guarda una forma distinta de vivir FACES.">
+    <Fragment slot="title">Detrás de cada aula hay una <span>historia.</span></Fragment>
+    <div class="hero-actions" slot="actions"><a class="button button-primary" href={asset('participa/?tipo=historia#formulario')}>Propón una historia <Icon name="arrow" size={18}/></a></div>
+  </PageHero>
+
+  <section class="section voices-section">
+    <div class="container voices-grid">
+      <div><p class="section-label">Una comunidad plural</p><h2 class="section-title">Aquí caben todas las voces.</h2><p class="section-intro">Cada perfil busca reconocer a la persona, comprender su vínculo con FACES y preservar su huella.</p></div>
+      <ol class="voice-list">{voices.map(([title, text], index) => <li><span>0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div></li>)}</ol>
+    </div>
+  </section>
+
+  <section class="photo-narrative" aria-label="Vida en FACES">
+    <figure class="photo-large"><img src={asset('images/vida-campus.webp')} alt="Caminos y jardines de FACES ULA" width="540" height="946" loading="lazy" /><figcaption>El campus también es un punto de encuentro.</figcaption></figure>
+    <figure class="photo-small"><img src={asset('images/trabajo-administrativo.webp')} alt="Miembro del personal administrativo trabajando en FACES ULA" width="540" height="1200" loading="lazy" /><figcaption>El trabajo que hace posible cada día.</figcaption></figure>
+    <div class="photo-quote"><GridGuides /><p>“¿Qué dejó FACES en ti y qué dejas tú en FACES?”</p><span>La pregunta detrás de cada relato</span></div>
+  </section>
+
+  <section class="section section-dark story-method">
+    <div class="container">
+      <div class="section-heading split"><div><p class="section-label">Nuestra forma de contar</p><h2 class="section-title">Una historia, cuatro miradas.</h2></div><p class="section-intro">El archivo combina contexto humano, memoria y contenidos relacionados para que cada relato pueda permanecer.</p></div>
+      <div class="method-grid">
+        <article><span>I</span><h3>Perfil humano</h3><p>Quién es la persona y cuál es su vínculo con la Facultad.</p></article>
+        <article><span>II</span><h3>Historia</h3><p>La experiencia, el aprendizaje, el proyecto o el aporte que merece ser preservado.</p></article>
+        <article><span>III</span><h3>Huella</h3><p>Qué dejó FACES en esa persona y qué deja esa persona en FACES.</p></article>
+        <article><span>IV</span><h3>Memoria relacionada</h3><p>Un episodio, video, fotografía o publicación que permita seguir explorando.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section archive-section">
+    <div class="container archive-grid">
+      <div><p class="section-label">Archivo editorial</p><h2 class="section-title">Las primeras fichas se están preparando.</h2></div>
+      <div><p>Esta versión deja lista la estructura para publicar historias reales. Cada testimonio y fotografía se incorporará con la autorización correspondiente, sin convertir el archivo en una copia de las redes sociales.</p><p class="archive-note"><Icon name="check" size={20}/> Historias verificadas, autorizadas y preservadas.</p><ArrowLink to="participa/?tipo=historia#formulario" label="Cuéntanos qué historia deberíamos conocer"/></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero h1 span { color: var(--accent-primary); }
+  .voices-grid { display: grid; gap: 48px; }
+  .voice-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--border-subtle); }
+  .voice-list li { display: grid; grid-template-columns: 36px 1fr; gap: 16px; padding-block: 22px; border-bottom: 1px solid var(--border-subtle); }
+  .voice-list > li > span { color: var(--accent-secondary); font-size: .66rem; font-weight: 800; }
+  .voice-list h3 { margin: 0 0 6px; font-size: 1.05rem; }
+  .voice-list p { margin: 0; color: var(--text-secondary); font-size: .82rem; line-height: 1.65; }
+  .photo-narrative { display: grid; background: var(--surface-dark); }
+  .photo-narrative figure { position: relative; margin: 0; min-height: 420px; overflow: hidden; }
+  .photo-narrative figure img { width: 100%; height: 100%; min-height: 420px; object-fit: cover; }
+  .photo-narrative figcaption { position: absolute; left: 16px; bottom: 16px; padding: 10px 12px; background: var(--surface-page); color: var(--text-primary); font-size: .68rem; }
+  .photo-quote { position: relative; min-height: 360px; display: grid; align-content: center; padding: 48px 24px; color: var(--text-on-dark); overflow: hidden; }
+  .photo-quote p, .photo-quote span { position: relative; z-index: 1; }
+  .photo-quote p { max-width: 18ch; margin: 0 0 24px; font-size: clamp(1.8rem, 4.5vw, 3.6rem); font-weight: 780; line-height: 1.12; letter-spacing: -.05em; }
+  .photo-quote > span { color: var(--accent-secondary-on-dark); font-size: .68rem; font-weight: 700; }
+  .method-grid { display: grid; border-top: 1px solid var(--border-on-dark); }
+  .method-grid article { padding-block: 28px; border-bottom: 1px solid var(--border-on-dark); }
+  .method-grid article > span { color: var(--accent-secondary-on-dark); font-size: .7rem; font-weight: 800; }
+  .method-grid h3 { margin: 12px 0 10px; font-size: 1.25rem; }
+  .method-grid p { margin: 0; font-size: .82rem; line-height: 1.75; opacity: .76; }
+  .archive-grid { display: grid; gap: 32px; }
+  .archive-grid > div:last-child > p:first-child { margin: 0 0 24px; color: var(--text-secondary); line-height: 1.8; }
+  .archive-note { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; color: var(--accent-primary); font-size: .78rem; font-weight: 700; }
+  @media (min-width: 768px) {
+    .voices-grid, .archive-grid { grid-template-columns: .9fr 1.1fr; gap: 72px; }
+    .photo-narrative { grid-template-columns: 1fr 1fr; }
+    .photo-quote { grid-column: 1 / -1; }
+    .method-grid { grid-template-columns: repeat(2, 1fr); }
+    .method-grid article { padding: 32px; }
+    .method-grid article:nth-child(odd) { border-right: 1px solid var(--border-on-dark); }
+  }
+  @media (min-width: 1080px) {
+    .photo-narrative { grid-template-columns: 1.2fr .8fr 1fr; min-height: 540px; }
+    .photo-quote { grid-column: auto; min-height: 540px; }
+    .method-grid { grid-template-columns: repeat(4, 1fr); }
+    .method-grid article { border-right: 1px solid var(--border-on-dark); }
+  }
+</style>

@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import ArrowLink from '../components/ArrowLink.astro';
+import GridGuides from '../components/GridGuides.astro';
+import { manifesto } from '../data/site';
+import { asset } from '../utils/paths';
+
+const roman = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+const objectives = [
+  'Fortalecer la comunicación interna y la cohesión de la comunidad FACES.',
+  'Visibilizar el talento, las trayectorias, los logros y las historias humanas.',
+  'Facilitar el acceso a información académica y administrativa útil y comprensible.',
+  'Promover conversaciones, entrevistas y debates que amplíen la experiencia académica.',
+  'Construir y preservar una memoria digital de FACES.',
+  'Ofrecer un espacio práctico para desarrollar competencias de comunicación, investigación y trabajo colaborativo.',
+  'Favorecer el relevo generacional para que EQANTH trascienda a su equipo fundador.'
+];
+---
+<BaseLayout title="Somos EQANTH | Historia, propósito y manifiesto" description="Conoce el origen, la misión, la visión y los principios de EQANTH, la plataforma de comunicación e integración de FACES ULA.">
+  <PageHero label="Somos EQANTH" intro="Humanizamos la experiencia universitaria y fortalecemos la identidad FACES mediante contenidos que informan, conectan y dan voz a las personas." image="images/comunidad-pasillos.webp" imageAlt="Estudiantes compartiendo en un pasillo de FACES ULA" caption="La comunidad es el centro del proyecto.">
+    <Fragment slot="title">Una pregunta que se volvió <span class="wine">comunidad.</span></Fragment>
+    <div class="hero-actions" slot="actions"><a class="button button-primary" href="#historia">Conoce nuestra historia <Icon name="arrow" size={18}/></a></div>
+  </PageHero>
+
+  <section class="section" id="historia">
+    <div class="container story-grid">
+      <div class="story-heading"><p class="section-label">Nuestra historia</p><h2 class="section-title">Todo comenzó con una desconexión.</h2></div>
+      <div class="story-copy prose"><p>A finales de 2024 comenzó una pregunta que iba más allá de encontrar un salón: ¿cómo hacemos para sentirnos más conectados con la Facultad que habitamos?</p><p>De esa inquietud nació una iniciativa orientada a acercar información, abrir conversaciones y mostrar la dimensión humana de FACES.</p></div>
+      <ol class="timeline">
+        <li><span>2024</span><div><h3>La inquietud inicial</h3><p>EQANTH comenzó a gestarse en el último trimestre como respuesta a información que no siempre llegaba, narrativas pesimistas y pocos espacios digitales horizontales.</p></div></li>
+        <li><span>Marzo de 2025</span><div><h3>La pregunta tomó voz</h3><p>El proyecto evolucionó hacia un formato de podcast. Las entrevistas y conversaciones ampliaron su alcance hasta convertirlo en una plataforma de comunicación, información y memoria.</p></div></li>
+        <li><span>Período I-2026</span><div><h3>Aval de Facultad</h3><p>El Consejo de Facultad de FACES ULA otorgó su aval, un paso relevante para la consolidación institucional y la continuidad del proyecto.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-dark purpose-section">
+    <GridGuides />
+    <div class="container purpose-grid">
+      <article class="purpose-lead"><p class="section-label">Nuestro propósito</p><h2>Informar.<br />Conectar.<br />Dar voz.</h2><p>Para que la experiencia universitaria se sienta más humana, cercana y compartida.</p></article>
+      <article><span>Misión</span><h3>Ser un canal directo, cercano y confiable.</h3><p>Informamos, integramos y damos voz a la comunidad FACES, promoviendo el debate académico, el reconocimiento del talento, el acceso a información útil y el sentido de pertenencia.</p></article>
+      <article><span>Visión</span><h3>Ser una memoria viva que pueda continuar.</h3><p>Buscamos consolidarnos como un referente de comunicación para FACES ULA y como una plataforma sostenible que preserve historias y pueda ser transformada por nuevas generaciones.</p></article>
+    </div>
+  </section>
+
+  <section class="section objectives-section">
+    <div class="container objectives-grid">
+      <div><p class="section-label">Lo que queremos lograr</p><h2 class="section-title">Siete objetivos, una misma dirección.</h2><p class="section-intro">La utilidad y la pertenencia guían cada formato, publicación y conversación.</p></div>
+      <ol class="objectives-list">{objectives.map((objective, index) => <li><span>0{index + 1}</span><p>{objective}</p></li>)}</ol>
+    </div>
+  </section>
+
+  <section class="section section-muted" id="manifiesto">
+    <div class="container manifesto-grid">
+      <div class="manifesto-intro"><p class="section-label">Manifiesto EQANTH</p><h2 class="section-title">Cómo queremos construir comunidad.</h2><p class="section-intro">No es un reglamento rígido. Es una forma de cuidar las ideas, el trabajo, el tiempo y las personas que hacen posible este proyecto.</p><div class="notice"><strong>Respetar el tiempo también es agradecer.</strong><p>Especialmente el tiempo que cada persona decide dedicar de forma voluntaria a EQANTH.</p></div></div>
+      <div class="manifesto-list">
+        {manifesto.map(([title, text], index) => <details>
+          <summary><span>{roman[index]}.</span><strong>{title}</strong><Icon name="plus" size={20}/></summary>
+          <p>{text}</p>
+        </details>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section next-section">
+    <div class="container next-inner"><div><p class="section-label">Las personas son el archivo</p><h2>La historia continúa con cada voz.</h2></div><ArrowLink to="historias/" label="Explora Historias FACES"/></div>
+  </section>
+</BaseLayout>
+
+<style>
+  .wine { color: var(--accent-primary); }
+  .story-grid { display: grid; gap: 32px; }
+  .story-copy { align-self: end; color: var(--text-secondary); }
+  .timeline { grid-column: 1 / -1; margin: 40px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--border-subtle); }
+  .timeline li { display: grid; gap: 12px; padding-block: 28px; border-bottom: 1px solid var(--border-subtle); }
+  .timeline li > span { color: var(--accent-primary); font-size: .72rem; font-weight: 800; letter-spacing: .06em; }
+  .timeline h3 { margin: 0 0 8px; font-size: 1.15rem; }
+  .timeline p { max-width: 62ch; margin: 0; color: var(--text-secondary); font-size: .85rem; line-height: 1.75; }
+  .purpose-grid { position: relative; z-index: 1; display: grid; gap: 48px; }
+  .purpose-grid article { border-top: 1px solid var(--border-on-dark); padding-top: 24px; }
+  .purpose-grid article > span { color: var(--accent-secondary-on-dark); font-size: .7rem; font-weight: 800; text-transform: uppercase; letter-spacing: .12em; }
+  .purpose-grid h3 { max-width: 18ch; margin: 16px 0; font-size: 1.7rem; line-height: 1.15; letter-spacing: -.04em; }
+  .purpose-grid article > p:last-child { max-width: 48ch; margin: 0; font-size: .86rem; line-height: 1.8; opacity: .8; }
+  .purpose-lead h2 { margin: 20px 0; color: var(--text-on-dark); font-size: clamp(3.5rem, 9vw, 7rem); line-height: .9; letter-spacing: -.07em; }
+  .objectives-grid { display: grid; gap: 48px; }
+  .objectives-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--border-subtle); }
+  .objectives-list li { display: grid; grid-template-columns: 36px 1fr; gap: 16px; padding-block: 20px; border-bottom: 1px solid var(--border-subtle); }
+  .objectives-list span { color: var(--accent-secondary); font-size: .65rem; font-weight: 800; }
+  .objectives-list p { margin: 0; font-size: .88rem; line-height: 1.65; }
+  .manifesto-grid { display: grid; gap: 48px; }
+  .manifesto-intro .notice { margin-top: 32px; }
+  .manifesto-list { border-top: 1px solid var(--border-subtle); }
+  .manifesto-list details { border-bottom: 1px solid var(--border-subtle); }
+  .manifesto-list summary { min-height: 68px; display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 12px; cursor: pointer; list-style: none; }
+  .manifesto-list summary::-webkit-details-marker { display: none; }
+  .manifesto-list summary > span { color: var(--accent-primary); font-size: .68rem; font-weight: 800; }
+  .manifesto-list summary strong { font-size: .83rem; line-height: 1.45; }
+  .manifesto-list summary svg { color: var(--accent-primary); transition: transform 180ms ease-out; }
+  .manifesto-list details[open] summary svg { transform: rotate(45deg); }
+  .manifesto-list details > p { margin: 0; padding: 0 0 24px 46px; max-width: 55ch; color: var(--text-secondary); font-size: .82rem; line-height: 1.75; }
+  .next-section { border-top: 1px solid var(--border-subtle); }
+  .next-inner { display: grid; gap: 32px; align-items: end; }
+  .next-inner h2 { max-width: 15ch; margin: 16px 0 0; font-size: clamp(2rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -.05em; }
+  @media (min-width: 768px) {
+    .story-grid { grid-template-columns: 1fr 1fr; gap: 56px; }
+    .timeline li { grid-template-columns: 170px 1fr; gap: 24px; }
+    .purpose-grid { grid-template-columns: repeat(2, 1fr); }
+    .purpose-lead { grid-column: 1 / -1; }
+    .objectives-grid { grid-template-columns: .85fr 1.15fr; gap: 72px; }
+    .manifesto-grid { grid-template-columns: .85fr 1.15fr; gap: 72px; }
+    .next-inner { grid-template-columns: 1fr auto; }
+  }
+  @media (min-width: 1080px) {
+    .purpose-grid { grid-template-columns: 1.2fr .8fr .8fr; }
+    .purpose-lead { grid-column: auto; padding-right: 32px; }
+  }
+</style>

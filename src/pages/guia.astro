@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import ArrowLink from '../components/ArrowLink.astro';
+import GridGuides from '../components/GridGuides.astro';
+
+const topics = [
+  { icon: 'file', title: 'Inscripciones', priority: 'Prioridad alta', text: 'Instructivos, horarios, pasos y enlaces oficiales para comprender el proceso antes de iniciarlo.', contents: 'Preparación previa · Paso a paso · Fechas · Fuente oficial' },
+  { icon: 'users', title: 'Grupos clasificatorios', priority: 'Prioridad alta', text: 'Explicación, consulta y contexto para que nuevos ingresos puedan orientarse con mayor claridad.', contents: 'Qué son · Cómo consultarlos · Preguntas frecuentes' },
+  { icon: 'calendar', title: 'Calendario académico', priority: 'Prioridad alta', text: 'Fechas relevantes organizadas con fuente, actualización y vigencia para evitar información desactualizada.', contents: 'Fechas del período · Fuente · Última actualización' },
+  { icon: 'file', title: 'Trámites frecuentes', priority: 'Contenido práctico', text: 'Explicaciones simples para saber qué necesitas, dónde acudir y cuál es el canal responsable.', contents: 'Requisitos · Pasos · Dependencia responsable' },
+  { icon: 'map', title: 'Servicios FACES', priority: 'Contenido práctico', text: 'Qué servicios existen, dónde encontrarlos y para qué pueden ser útiles durante la vida universitaria.', contents: 'Servicio · Ubicación · Finalidad · Contacto oficial' },
+  { icon: 'search', title: 'Preguntas frecuentes', priority: 'Prioridad alta', text: 'Respuestas a dudas recurrentes recogidas de la comunidad y redactadas en lenguaje claro.', contents: 'Pregunta · Respuesta · Fuente · Actualización' }
+];
+const faqs = [
+  ['¿EQANTH sustituye a las dependencias oficiales?', 'No. EQANTH explica y orienta. Las decisiones, requisitos, fechas y confirmaciones corresponden siempre a las dependencias responsables de FACES ULA.'],
+  ['¿Cómo sabré si una guía está vigente?', 'Cada contenido de servicio deberá mostrar su fecha de actualización, la fuente consultada y, cuando corresponda, un enlace al canal oficial. Si un dato puede cambiar, la guía lo advertirá.'],
+  ['¿Qué puedo hacer si encuentro un dato desactualizado?', 'Escríbenos por correo o mediante el formulario de participación. Señala la guía y el dato para que el equipo pueda revisarlo y corregirlo de forma visible.'],
+  ['¿Puedo proponer una guía o una pregunta?', 'Sí. La guía se construye a partir de necesidades reales. Puedes compartir una duda o sugerir un tema desde la sección Participa.']
+];
+---
+<BaseLayout title="Tu guía FACES | Información para orientarte" description="Una guía organizada para comprender inscripciones, grupos clasificatorios, calendario, trámites, servicios y preguntas frecuentes de FACES ULA.">
+  <PageHero label="Tu guía FACES" intro="La información útil no debería desaparecer debajo de publicaciones nuevas. Esta sección la organiza para que puedas encontrarla, comprenderla y verificar su fuente." image="images/faces-exterior.webp" imageAlt="Fachada de la Facultad de Ciencias Económicas y Sociales de la ULA" caption="Orientarse también es parte de la vida universitaria.">
+    <Fragment slot="title">Entender el proceso también es parte de <span>estudiar.</span></Fragment>
+    <div class="hero-actions" slot="actions"><a class="button button-primary" href="#temas">Explorar temas <Icon name="arrow" size={18}/></a><a class="button button-outline" href="#preguntas">Preguntas frecuentes</a></div>
+  </PageHero>
+
+  <section class="guide-rule">
+    <div class="container guide-rule-inner"><Icon name="check" size={24}/><p><strong>Nuestra regla editorial:</strong> fecha de actualización, fuente y enlace oficial cuando corresponda. EQANTH explica y orienta; no sustituye a las dependencias responsables.</p></div>
+  </section>
+
+  <section class="section" id="temas">
+    <div class="container">
+      <div class="section-heading split"><div><p class="section-label">Información que puedas encontrar</p><h2 class="section-title">Seis temas para empezar.</h2></div><p class="section-intro">La estructura está lista. Los instructivos y datos variables se publicarán después de su verificación con las fuentes correspondientes.</p></div>
+      <div class="topics-list">
+        {topics.map((topic, index) => <details class="topic-item">
+          <summary><span class="topic-number">0{index + 1}</span><Icon name={topic.icon} size={25}/><span class="topic-title"><strong>{topic.title}</strong><small>{topic.text}</small></span><span class="topic-status">{topic.priority}</span><Icon name="plus" size={21} class="topic-plus"/></summary>
+          <div class="topic-content"><p><strong>Qué incluirá:</strong> {topic.contents}</p><span>Contenido en preparación · Pendiente de validación con fuentes oficiales.</span></div>
+        </details>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark guide-principles">
+    <GridGuides />
+    <div class="container principles-grid">
+      <div><p class="section-label">Información con responsabilidad</p><h2 class="section-title">Antes de publicar, verificamos.</h2></div>
+      <ul>
+        <li><Icon name="check" size={21}/><span>Identificar la fuente académica o administrativa.</span></li>
+        <li><Icon name="check" size={21}/><span>Incluir fecha en todo contenido que pueda caducar.</span></li>
+        <li><Icon name="check" size={21}/><span>Corregir de forma visible los errores que afecten decisiones.</span></li>
+        <li><Icon name="check" size={21}/><span>Conservar títulos claros para facilitar la búsqueda.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section faq-section" id="preguntas">
+    <div class="container faq-grid">
+      <div><p class="section-label">Preguntas frecuentes</p><h2 class="section-title">Primero, lo esencial.</h2><p class="section-intro">Estas respuestas explican cómo funcionará la capa de servicio de EQANTH.</p></div>
+      <div class="faq-list">{faqs.map(([question, answer]) => <details><summary><strong>{question}</strong><Icon name="plus" size={20}/></summary><p>{answer}</p></details>)}</div>
+    </div>
+  </section>
+
+  <section class="section section-muted suggest-guide">
+    <div class="container suggest-inner"><div><p class="section-label">La guía parte de tus dudas</p><h2>¿Qué te gustaría entender mejor?</h2></div><ArrowLink to="participa/?tipo=informacion#formulario" label="Propón una guía o comparte una duda"/></div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero h1 span { color: var(--accent-primary); }
+  .guide-rule { background: var(--surface-accent); }
+  .guide-rule-inner { min-height: 96px; display: flex; align-items: center; gap: 16px; padding-block: 20px; }
+  .guide-rule-inner svg { flex-shrink: 0; color: var(--accent-primary); }
+  .guide-rule-inner p { max-width: 90ch; margin: 0; font-size: .78rem; line-height: 1.7; }
+  .topics-list { border-top: 1px solid var(--border-subtle); }
+  .topic-item { border-bottom: 1px solid var(--border-subtle); }
+  .topic-item summary { display: grid; grid-template-columns: 28px auto 1fr auto; align-items: center; gap: 14px; min-height: 104px; padding-block: 20px; cursor: pointer; list-style: none; }
+  .topic-item summary::-webkit-details-marker { display: none; }
+  .topic-number { color: var(--accent-secondary); font-size: .62rem; font-weight: 800; }
+  .topic-item summary > svg:not(.topic-plus) { color: var(--accent-primary); }
+  .topic-title { display: grid; gap: 6px; }
+  .topic-title strong { font-size: .95rem; }
+  .topic-title small { max-width: 62ch; color: var(--text-secondary); font-size: .72rem; line-height: 1.6; }
+  .topic-status { display: none; color: var(--text-secondary); font-size: .62rem; font-weight: 650; }
+  .topic-plus { color: var(--accent-primary); transition: transform 180ms ease-out; }
+  .topic-item[open] .topic-plus { transform: rotate(45deg); }
+  .topic-content { margin: 0 0 24px 42px; padding: 20px; background: var(--surface-muted); }
+  .topic-content p { margin: 0 0 8px; font-size: .76rem; line-height: 1.65; }
+  .topic-content span { color: var(--accent-primary); font-size: .67rem; font-weight: 650; }
+  .principles-grid { position: relative; z-index: 1; display: grid; gap: 40px; }
+  .principles-grid ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--border-on-dark); }
+  .principles-grid li { display: grid; grid-template-columns: auto 1fr; gap: 14px; padding-block: 20px; border-bottom: 1px solid var(--border-on-dark); font-size: .82rem; line-height: 1.65; }
+  .principles-grid li svg { color: var(--accent-secondary-on-dark); }
+  .faq-grid { display: grid; gap: 48px; }
+  .faq-list { border-top: 1px solid var(--border-subtle); }
+  .faq-list details { border-bottom: 1px solid var(--border-subtle); }
+  .faq-list summary { min-height: 72px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; cursor: pointer; list-style: none; }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary strong { font-size: .83rem; line-height: 1.5; }
+  .faq-list summary svg { color: var(--accent-primary); transition: transform 180ms ease-out; }
+  .faq-list details[open] summary svg { transform: rotate(45deg); }
+  .faq-list details p { margin: 0; padding: 0 32px 24px 0; color: var(--text-secondary); font-size: .82rem; line-height: 1.8; }
+  .suggest-inner { display: grid; gap: 24px; align-items: end; }
+  .suggest-inner h2 { max-width: 18ch; margin: 16px 0 0; font-size: clamp(2rem, 5vw, 4rem); line-height: 1.05; letter-spacing: -.05em; }
+  @media (min-width: 900px) {
+    .topic-item summary { grid-template-columns: 32px 36px 1fr 140px auto; gap: 20px; }
+    .topic-status { display: block; }
+    .topic-content { margin-left: 88px; }
+    .principles-grid, .faq-grid { grid-template-columns: .9fr 1.1fr; gap: 72px; }
+    .suggest-inner { grid-template-columns: 1fr auto; }
+  }
+</style>

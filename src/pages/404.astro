@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { href } from '../utils/paths';
+---
+<BaseLayout title="Aula no encontrada | EQANTH" description="La página que buscas no existe o cambió de aula.">
+  <section class="not-found"><div><p class="section-label">Error 404</p><h1>Parece que hoy no nos toca <span>esa aula.</span></h1><p>La dirección puede haber cambiado o el contenido todavía no está disponible. Volvamos a un punto de partida.</p><div class="hero-actions"><a class="button button-primary" href={href('')}>Volver al inicio <Icon name="arrow" size={18}/></a><button class="button button-outline" type="button" data-open-search><Icon name="search" size={18}/> Buscar en EQANTH</button></div></div></section>
+</BaseLayout>
+<style>.not-found{width:min(100% - 32px,var(--container));min-height:72dvh;margin-inline:auto;display:grid;align-items:center;padding-block:64px}.not-found>div{max-width:850px}.not-found h1{margin:20px 0 24px;font-size:clamp(3rem,8vw,7rem);line-height:.95;letter-spacing:-.07em}.not-found h1 span{color:var(--accent-primary)}.not-found>div>p:not(.section-label){max-width:52ch;margin:0 0 32px;color:var(--text-secondary);line-height:1.75}</style>

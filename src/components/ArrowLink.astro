@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro';
+import { href } from '../utils/paths';
+interface Props {
+  to: string;
+  label: string;
+  external?: boolean;
+  class?: string;
+}
+const { to, label, external = false, class: className = '' } = Astro.props;
+const url = external ? to : href(to);
+---
+<a class={`arrow-link ${className}`} href={url} {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}>
+  <span>{label}</span><Icon name={external ? 'external' : 'arrow'} size={19} />
+</a>

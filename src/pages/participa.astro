@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import GridGuides from '../components/GridGuides.astro';
+
+const options = [
+  ['equipo', 'Quiero sumarme al equipo', 'Aprende, aporta y ayuda a que el proyecto continúe.'],
+  ['historia', 'Quiero proponer una historia', 'Señala una experiencia o trayectoria que merezca ser preservada.'],
+  ['invitado', 'Quiero sugerir un invitado', 'Propón una voz o un tema para una próxima conversación.'],
+  ['informacion', 'Tengo información útil', 'Comparte una duda, una guía necesaria o un dato para revisar.'],
+  ['alianza', 'Quiero colaborar o crear una alianza', 'Construyamos una colaboración con sentido para la comunidad.']
+];
+const areas = [
+  ['Dirección general', 'Orientación estratégica, articulación institucional y seguimiento.'],
+  ['Producción', 'Investigación, preproducción, coordinación de invitados y logística.'],
+  ['Locución y conducción', 'Entrevistas, moderación y presencia frente a cámara o micrófono.'],
+  ['Redes y marketing', 'Diseño, difusión, cobertura y relación con la comunidad digital.']
+];
+---
+<BaseLayout title="Participa en EQANTH | Tu voz también cuenta" description="Súmate al equipo, propón una historia, sugiere un invitado, comparte información útil o construye una alianza con EQANTH.">
+  <PageHero label="Participa" intro="EQANTH no pertenece únicamente al equipo que hoy lo coordina. Su sostenibilidad depende de que nuevas personas puedan integrarse, aprender y asumir responsabilidades." image="images/vida-campus.webp" imageAlt="Vida universitaria en los espacios abiertos de FACES ULA" caption="La comunidad crece cuando cada persona encuentra dónde aportar.">
+    <Fragment slot="title">Tu voz también puede formar parte de esta <span>historia.</span></Fragment>
+    <div class="hero-actions" slot="actions"><a class="button button-primary" href="#formulario">Quiero aportar <Icon name="arrow" size={18}/></a></div>
+  </PageHero>
+
+  <section class="section participate-options">
+    <div class="container">
+      <div class="section-heading split"><div><p class="section-label">Elige cómo participar</p><h2 class="section-title">Hay más de una forma de estar.</h2></div><p class="section-intro">No necesitas tener todas las respuestas. Una idea, una pregunta o una historia ya pueden ser un punto de partida.</p></div>
+      <div class="option-list">{options.map(([value, title, text], index) => <a href={`?tipo=${value}#formulario`}><span>0{index + 1}</span><div><h3>{title}</h3><p>{text}</p></div><Icon name="arrow" size={22}/></a>)}</div>
+    </div>
+  </section>
+
+  <section class="section section-dark team-section">
+    <GridGuides />
+    <div class="container team-grid">
+      <div><p class="section-label">Un equipo con relevo generacional</p><h2 class="section-title">Aprender también es una forma de liderar.</h2><p class="section-intro">El modelo puede incorporar equipos rotativos y estudiantes de Administración, Contaduría, Economía, Estadística y Gestión Gastronómica.</p></div>
+      <div class="area-list">{areas.map(([title, text], index) => <article><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+    </div>
+  </section>
+
+  <section class="section form-section" id="formulario">
+    <div class="container form-grid">
+      <div class="form-intro"><p class="section-label">Hablemos</p><h2 class="section-title">Cuéntanos qué tienes en mente.</h2><p class="section-intro">Completa el formulario y continuaremos la conversación por correo. Al enviar, se abrirá tu aplicación de correo con el mensaje preparado; esta web no almacena tus datos.</p><div class="form-note"><Icon name="mail" size={22}/><span>Si prefieres, escribe directamente a <a href="mailto:elpodcastdefaces@gmail.com">elpodcastdefaces@gmail.com</a></span></div></div>
+      <form class="participation-form" id="participation-form">
+        <div class="field"><label for="tipo">¿Cómo quieres participar?</label><select id="tipo" name="tipo" required><option value="">Selecciona una opción</option><option value="equipo">Quiero sumarme al equipo</option><option value="historia">Quiero proponer una historia</option><option value="invitado">Quiero sugerir un invitado</option><option value="informacion">Tengo información útil o una duda</option><option value="alianza">Quiero colaborar o crear una alianza</option></select></div>
+        <div class="field-row"><div class="field"><label for="nombre">Tu nombre</label><input id="nombre" name="nombre" type="text" autocomplete="name" minlength="2" maxlength="100" required placeholder="¿Cómo te llamas?" /></div><div class="field"><label for="correo">Tu correo</label><input id="correo" name="correo" type="email" autocomplete="email" maxlength="160" required placeholder="nombre@correo.com" /></div></div>
+        <div class="field"><label for="vinculo">Tu vínculo con FACES <span>(opcional)</span></label><input id="vinculo" name="vinculo" type="text" maxlength="120" placeholder="Estudiante, egresado, profesor…" /></div>
+        <div class="field"><label for="mensaje">Tu propuesta</label><textarea id="mensaje" name="mensaje" rows="6" minlength="10" maxlength="2000" required placeholder="Cuéntanos la idea, la historia, el invitado o la información que quieres compartir."></textarea><small>Máximo 2.000 caracteres.</small></div>
+        <button class="button button-primary submit-button" type="submit">Preparar correo <Icon name="arrow" size={18}/></button>
+        <p class="form-feedback" id="form-feedback" role="status">No se enviará nada sin que revises el correo en tu aplicación.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="section section-blue contact-section" id="contacto">
+    <div class="container contact-grid">
+      <div><p class="section-label">Contacto y canales</p><h2 class="section-title">Sigamos la conversación.</h2><p class="section-intro">FACES ULA · Av. Las Américas, Edificios Multiusos, Mérida 5101.</p></div>
+      <div class="contact-links"><a href="mailto:elpodcastdefaces@gmail.com"><Icon name="mail" size={23}/><span><small>Correo</small>elpodcastdefaces@gmail.com</span></a><a href="https://www.instagram.com/enqueaulanostocahoy/" target="_blank" rel="noopener noreferrer"><Icon name="instagram" size={23}/><span><small>Instagram</small>@enqueaulanostocahoy</span></a><a href="https://www.youtube.com/@enqueaulanostocahoy" target="_blank" rel="noopener noreferrer"><Icon name="youtube" size={23}/><span><small>YouTube</small>@enqueaulanostocahoy</span></a></div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#participation-form');
+  const typeField = document.querySelector<HTMLSelectElement>('#tipo');
+  const feedback = document.querySelector<HTMLElement>('#form-feedback');
+  const params = new URLSearchParams(window.location.search);
+  const requestedType = params.get('tipo');
+  if (requestedType && typeField?.querySelector(`option[value="${requestedType}"]`)) typeField.value = requestedType;
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const type = typeField?.selectedOptions[0]?.textContent || 'Participación en EQANTH';
+    const name = String(data.get('nombre') || '');
+    const email = String(data.get('correo') || '');
+    const link = String(data.get('vinculo') || 'No indicado');
+    const message = String(data.get('mensaje') || '');
+    const subject = `[Web EQANTH] ${type} — ${name}`;
+    const body = `Hola, equipo EQANTH:\n\n${message}\n\n—\nNombre: ${name}\nCorreo: ${email}\nVínculo con FACES: ${link}\nTipo de participación: ${type}\n\nEnviado desde el formulario web.`;
+    if (feedback) feedback.textContent = 'Abriendo tu aplicación de correo. Revisa el mensaje y confirma el envío allí.';
+    window.location.href = `mailto:elpodcastdefaces@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+</script>
+
+<style>
+  .page-hero h1 span { color: var(--accent-primary); }
+  .option-list { display: grid; border-top: 1px solid var(--border-subtle); }
+  .option-list > a { display: grid; grid-template-columns: 30px 1fr auto; align-items: center; gap: 16px; padding-block: 24px; border-bottom: 1px solid var(--border-subtle); color: var(--text-primary); text-decoration: none; transition: padding 180ms ease-out, color 180ms ease-out; }
+  .option-list > a > span { color: var(--accent-secondary); font-size: .65rem; font-weight: 800; }
+  .option-list h3 { margin: 0 0 6px; font-size: .95rem; }
+  .option-list p { margin: 0; color: var(--text-secondary); font-size: .74rem; line-height: 1.6; }
+  .option-list svg { color: var(--accent-primary); transition: transform 180ms ease-out; }
+  .option-list a:hover { padding-inline: 8px; color: var(--accent-primary); }
+  .option-list a:hover svg { transform: translateX(5px); }
+  .team-grid { position: relative; z-index: 1; display: grid; gap: 48px; }
+  .area-list { display: grid; }
+  .area-list article { padding-block: 24px; border-top: 1px solid var(--border-on-dark); }
+  .area-list article > span { color: var(--accent-secondary-on-dark); font-size: .62rem; font-weight: 800; }
+  .area-list h3 { margin: 10px 0 8px; font-size: 1.05rem; }
+  .area-list p { margin: 0; font-size: .8rem; line-height: 1.7; opacity: .76; }
+  .form-grid { display: grid; gap: 48px; }
+  .form-note { display: flex; align-items: flex-start; gap: 12px; margin-top: 32px; color: var(--accent-primary); }
+  .form-note svg { flex-shrink: 0; }
+  .form-note span { font-size: .76rem; line-height: 1.7; }
+  .form-note a { color: inherit; font-weight: 700; overflow-wrap: anywhere; }
+  .participation-form { display: grid; gap: 22px; }
+  .field-row { display: grid; gap: 22px; }
+  .field { display: grid; gap: 8px; }
+  .field label { font-size: .75rem; font-weight: 750; }
+  .field label span { color: var(--text-secondary); font-weight: 500; }
+  .field input, .field select, .field textarea { width: 100%; min-height: 50px; padding: 13px 14px; border: 1px solid var(--border-subtle); border-radius: 0; background: var(--surface-page); color: var(--text-primary); font-size: .84rem; transition: border-color 180ms ease-out, background 180ms ease-out; }
+  .field textarea { min-height: 150px; resize: vertical; }
+  .field input::placeholder, .field textarea::placeholder { color: var(--text-tertiary); }
+  .field input:hover, .field select:hover, .field textarea:hover { border-color: var(--text-secondary); }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent-secondary); background: var(--blue-50); }
+  .field small { color: var(--text-secondary); font-size: .65rem; }
+  .submit-button { justify-self: start; }
+  .form-feedback { margin: 0; color: var(--text-secondary); font-size: .7rem; line-height: 1.6; }
+  .contact-grid { display: grid; gap: 40px; }
+  .contact-links { display: grid; border-top: 1px solid var(--border-subtle); }
+  .contact-links > a { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 16px; padding-block: 20px; border-bottom: 1px solid var(--border-subtle); color: var(--text-primary); text-decoration: none; }
+  .contact-links > a > svg { color: var(--accent-primary); }
+  .contact-links span { display: grid; gap: 3px; font-size: .8rem; font-weight: 650; overflow-wrap: anywhere; }
+  .contact-links small { color: var(--text-secondary); font-size: .62rem; font-weight: 600; }
+  @media (min-width: 768px) {
+    .field-row { grid-template-columns: 1fr 1fr; }
+    .team-grid, .form-grid, .contact-grid { grid-template-columns: .9fr 1.1fr; gap: 72px; }
+    .area-list { grid-template-columns: repeat(2, 1fr); gap: 0 32px; }
+  }
+</style>

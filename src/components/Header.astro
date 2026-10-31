@@ -1,0 +1,100 @@
+---
+import Icon from './Icon.astro';
+import Search from './Search.astro';
+import { navigation } from '../data/site';
+import { asset, baseUrl, href } from '../utils/paths';
+
+const relativePath = Astro.url.pathname.startsWith(baseUrl)
+  ? Astro.url.pathname.slice(baseUrl.length)
+  : Astro.url.pathname.replace(/^\//, '');
+const isCurrent = (path: string) => path === '' ? relativePath === '' : relativePath.startsWith(path);
+---
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href={href('')} aria-label="EQANTH, ir al inicio">
+      <img src={asset('images/isotipo-eqanth.png')} alt="" width="30" height="48" />
+      <span class="brand-type"><strong>EQANTH</strong><small>Historia, pertenencia e identidad</small></span>
+    </a>
+    <nav class="desktop-nav" aria-label="Navegación principal">
+      {navigation.map((item) => <a href={href(item.path)} aria-current={isCurrent(item.path) ? 'page' : undefined}>{item.label}</a>)}
+    </nav>
+    <div class="header-actions">
+      <button class="search-trigger" type="button" data-open-search aria-label="Abrir buscador"><Icon name="search" size={20}/><span>Buscar</span></button>
+      <button class="menu-trigger" type="button" data-open-menu aria-label="Abrir menú"><Icon name="menu" size={24}/></button>
+    </div>
+  </div>
+</header>
+
+<dialog class="menu-dialog" id="menu-dialog" aria-labelledby="menu-title">
+  <div class="menu-top">
+    <p id="menu-title">¿A qué aula vamos hoy?</p>
+    <button class="icon-button" type="button" data-close-menu aria-label="Cerrar menú"><Icon name="close" size={26}/></button>
+  </div>
+  <nav class="mobile-nav" aria-label="Navegación móvil">
+    {navigation.map((item, index) => <a href={href(item.path)} aria-current={isCurrent(item.path) ? 'page' : undefined}><span>0{index + 1}</span>{item.label}<Icon name="arrow" size={24}/></a>)}
+  </nav>
+  <div class="menu-footer">
+    <p>Una plataforma de comunicación e integración de FACES ULA.</p>
+    <div><a href="https://www.instagram.com/enqueaulanostocahoy/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.youtube.com/@enqueaulanostocahoy" target="_blank" rel="noopener noreferrer">YouTube</a></div>
+  </div>
+</dialog>
+<Search />
+
+<script>
+  const menu = document.querySelector<HTMLDialogElement>('#menu-dialog');
+  const openMenu = document.querySelector('[data-open-menu]');
+  const closeMenu = document.querySelector('[data-close-menu]');
+  openMenu?.addEventListener('click', () => { menu?.showModal(); document.body.classList.add('dialog-open'); });
+  closeMenu?.addEventListener('click', () => menu?.close());
+  menu?.addEventListener('click', (event) => { if (event.target === menu) menu.close(); });
+  menu?.addEventListener('keydown', (event) => { if (event.key === 'Escape') { event.preventDefault(); menu.close(); } });
+  menu?.addEventListener('close', () => document.body.classList.remove('dialog-open'));
+  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => menu.close()));
+</script>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: var(--z-header); background: color-mix(in oklab, var(--surface-page) 94%, transparent); border-bottom: 1px solid var(--border-subtle); backdrop-filter: blur(14px); }
+  .header-inner { width: min(100% - 32px, var(--container)); margin-inline: auto; min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text-primary); text-decoration: none; flex-shrink: 0; }
+  .brand img { width: 25px; height: 44px; object-fit: contain; }
+  .brand-type { display: grid; gap: 1px; }
+  .brand strong { font-size: 1.15rem; letter-spacing: .08em; line-height: 1; }
+  .brand small { font-size: .57rem; font-weight: 600; letter-spacing: .015em; color: var(--text-secondary); }
+  .desktop-nav { display: none; align-items: center; gap: 24px; }
+  .desktop-nav a { position: relative; min-height: 44px; display: inline-flex; align-items: center; color: var(--text-secondary); text-decoration: none; font-size: .77rem; font-weight: 650; white-space: nowrap; transition: color 180ms ease-out; }
+  .desktop-nav a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: 5px; height: 2px; background: var(--accent-primary); transition: right 200ms ease-out; }
+  .desktop-nav a:hover, .desktop-nav a[aria-current='page'] { color: var(--text-primary); }
+  .desktop-nav a:hover::after, .desktop-nav a[aria-current='page']::after { right: 0; }
+  .header-actions { display: flex; align-items: center; gap: 4px; }
+  .search-trigger, .menu-trigger, .icon-button { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; background: transparent; color: var(--text-primary); cursor: pointer; border-radius: var(--radius-sm); transition: background 180ms ease-out, transform 180ms ease-out; }
+  .search-trigger { padding-inline: 12px; font: inherit; font-size: .78rem; font-weight: 650; }
+  .search-trigger:hover, .menu-trigger:hover, .icon-button:hover { background: var(--surface-muted); }
+  .search-trigger:active, .menu-trigger:active, .icon-button:active { transform: scale(.95); }
+  .menu-dialog { width: 100%; max-width: none; height: 100dvh; max-height: none; margin: 0; padding: 24px; border: 0; background: var(--surface-dark); color: var(--text-on-dark); opacity: 0; transform: translateY(-12px); transition: opacity 220ms ease-out, transform 220ms ease-out, overlay 220ms allow-discrete, display 220ms allow-discrete; }
+  .menu-dialog[open] { opacity: 1; transform: translateY(0); display: flex; flex-direction: column; }
+  @starting-style { .menu-dialog[open] { opacity: 0; transform: translateY(-12px); } }
+  .menu-dialog::backdrop { background: var(--surface-dark); }
+  .menu-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 24px; border-bottom: 1px solid var(--border-on-dark); }
+  .menu-top p { margin: 0; font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 700; }
+  .menu-top .icon-button { color: var(--text-on-dark); }
+  .menu-top .icon-button:hover { background: rgb(255 255 255 / .1); }
+  .mobile-nav { display: grid; margin-top: 24px; }
+  .mobile-nav a { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; min-height: 64px; color: var(--text-on-dark); text-decoration: none; border-bottom: 1px solid var(--border-on-dark); font-size: clamp(1.15rem, 5vw, 1.7rem); font-weight: 700; transition: padding 180ms ease-out, color 180ms ease-out; }
+  .mobile-nav a span { font-size: .64rem; font-weight: 500; opacity: .65; }
+  .mobile-nav a:hover { padding-left: 8px; color: var(--accent-secondary-on-dark); }
+  .mobile-nav a[aria-current='page'] { color: var(--accent-secondary-on-dark); }
+  .menu-footer { margin-top: auto; padding-top: 28px; display: grid; gap: 16px; }
+  .menu-footer p { max-width: 42ch; margin: 0; font-size: .82rem; line-height: 1.6; opacity: .76; }
+  .menu-footer div { display: flex; gap: 24px; }
+  .menu-footer a { color: var(--text-on-dark); font-size: .8rem; font-weight: 700; text-underline-offset: 4px; }
+  @media (min-width: 1120px) {
+    .desktop-nav { display: flex; }
+    .menu-trigger { display: none; }
+  }
+  @media (max-width: 480px) {
+    .header-inner { width: min(100% - 24px, var(--container)); min-height: 68px; gap: 8px; }
+    .brand small { display: none; }
+    .search-trigger span { display: none; }
+    .search-trigger { padding-inline: 8px; }
+  }
+</style>
